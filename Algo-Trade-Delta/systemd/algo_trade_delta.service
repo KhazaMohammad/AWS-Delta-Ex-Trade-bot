@@ -1,0 +1,23 @@
+[Unit]
+Description=Algo-Trade-Delta - Heiken Ashi trading bot for Delta Exchange
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/Algo-Trade-Delta
+ExecStart=/home/ubuntu/Algo-Trade-Delta/venv/bin/python /home/ubuntu/Algo-Trade-Delta/main.py
+ExecStop=/bin/kill -SIGTERM $MAINPID
+Restart=always
+RestartSec=30
+StandardOutput=append:/home/ubuntu/Algo-Trade-Delta/logs/systemd.stdout.log
+StandardError=append:/home/ubuntu/Algo-Trade-Delta/logs/systemd.stderr.log
+
+# Environment file (systemd reads VAR=value lines, no quotes needed)
+EnvironmentFile=/home/ubuntu/Algo-Trade-Delta/.env
+
+# Graceful shutdown timeout
+TimeoutStopSec=60
+
+[Install]
+WantedBy=multi-user.target
